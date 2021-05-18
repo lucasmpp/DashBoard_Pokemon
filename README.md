@@ -8,6 +8,6 @@
 - Tiago Sampaio - 190038705
   
 ## Instruções
-Para executar o projeto, execute `cd src/` e `python pokemon.py` (com `python3` em sistemas linux). 
+Para executar o projeto, execute `cd src/` e `python pokemon.py` (com `python3` em sistemas linux) no seu terminal, estando dentro da pasta do seu clone deste repositório.
 
 Seu terminal exibirá um link em seu localhost, como por exemplo `http://127.x.x.1:8085`. Para visualizar o dashboard, basta acessar essa URL em seu navegador.
