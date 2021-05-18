@@ -12,4 +12,5 @@ Para executar o projeto, execute `cd src/` e `python pokemon.py` (com `python3` 
 
 Seu terminal exibirá um link em seu localhost, como por exemplo `http://127.x.x.1:8085`. Para visualizar o dashboard, basta acessar essa URL em seu navegador.
 
-![alt text](<./imagens/dash1.png>) 
+## Nota
+Na pasta "imagens" é possível encontrar _screenshots_ da versão do _Dashboard_ enviada na data prevista para a entrega do trabalho. Para a apresentação, alguns ajustes no layout e no gráfico de dispersão serão realizados.
