@@ -13,12 +13,10 @@ from unidecode import unidecode
 
 ############ dados
 data = pd.read_csv('C:\\Users\\Lucas\\Documents\\UNB\\CE2py\\pokemon.csv')
+data = data.drop(773)
 
-tipo = ['fire','water','grass']
-radar = grafico_radar_comparacao(data, tipo)
-graf2 = chart_catch_x_tot(data, tipo)
-graf3 = chart_egg_x_tot(data)
-graf4 = chart_egg_x_catch(data)
+
+
 # the style arguments for the sidebar.
 SIDEBAR_STYLE = {
     'position': 'fixed',
@@ -144,7 +142,7 @@ content_first_row = dbc.Row([
                 dbc.CardBody(
                     [
                         html.H4('Quantidade', className='card-title', style=CARD_TEXT_STYLE),
-                        html.P(id='card_qtd', children=['Sample text.'], style=CARD_TEXT_STYLE),
+                        html.P(id='card_qtd', children=['0'], style=CARD_TEXT_STYLE),
                     ]
                 )
             ]
@@ -158,7 +156,7 @@ content_first_row = dbc.Row([
                 dbc.CardBody(
                     [
                         html.H4('Média Altura', className='card-title', style=CARD_TEXT_STYLE),
-                        html.P(id='card_alt', children=['Sample text.'], style=CARD_TEXT_STYLE),
+                        html.P(id='card_alt', children=['0'], style=CARD_TEXT_STYLE),
                     ]
                 ),
             ]
@@ -172,7 +170,7 @@ content_first_row = dbc.Row([
                 dbc.CardBody(
                     [
                         html.H4('Média Peso', className='card-title', style=CARD_TEXT_STYLE),
-                        html.P(id='card_peso', children=['Sample text.'], style=CARD_TEXT_STYLE),
+                        html.P(id='card_peso', children=['0'], style=CARD_TEXT_STYLE),
                     ]
                 ),
             ]
@@ -238,8 +236,41 @@ content = html.Div(
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([sidebar, content])
 
-    
+#### callbacks cards  
 
+@app.callback(
+    Output('card_qtd', 'children'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_card_qtd(n_clicks, tipo_value, geracao_value,leg_value):
+    dados,tipo = filtragem(data,tipo_value, geracao_value,leg_value)
+    return quantidade(dados)
+
+
+@app.callback(
+    Output('card_alt', 'children'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_card_alt(n_clicks, tipo_value, geracao_value,leg_value):
+    dados,tipo = filtragem(data,tipo_value, geracao_value,leg_value)
+    return alt_media(dados)
+
+
+@app.callback(
+    Output('card_peso', 'children'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_card_peso(n_clicks, tipo_value, geracao_value,leg_value):
+    dados,tipo = filtragem(data,tipo_value, geracao_value,leg_value)
+    return peso_media(dados)
+
+#### callbacks graficos
 @app.callback(
     Output('graph_1', 'figure'),
     [Input('submit_button', 'n_clicks')],
@@ -247,9 +278,9 @@ app.layout = html.Div([sidebar, content])
      State('tipo', 'value'),State('geracao','value'),State('lendario','value')
      ])
 def update_graph_1(n_clicks, tipo_value, geracao_value,leg_value):
-    dados = filtragem(data,tipo_value, geracao_value,leg_value)
+    dados,tipo = filtragem(data,tipo_value, geracao_value,leg_value)
     
-    return chart_catch_x_tot(dados,tipo_value)
+    return chart_catch_x_tot(dados,tipo)
 
 
 @app.callback(
@@ -259,9 +290,9 @@ def update_graph_1(n_clicks, tipo_value, geracao_value,leg_value):
      State('tipo', 'value'),State('geracao','value'),State('lendario','value')
      ])
 def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
-    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    dados,tipo = filtragem(data,tipo_value, geracao_value,lendario_value)
     
-    return grafico_radar_comparacao(dados,tipo_value)
+    return grafico_radar_comparacao(dados,tipo)
 
 @app.callback(
     Output('graph_3', 'figure'),
@@ -270,7 +301,7 @@ def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
      State('tipo', 'value'),State('geracao','value'),State('lendario','value')
      ])
 def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
-    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    dados,tipo = filtragem(data,tipo_value, geracao_value,lendario_value)
     
     return chart_egg_x_tot(dados)
 
@@ -281,7 +312,7 @@ def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
      State('tipo', 'value'),State('geracao','value'),State('lendario','value')
      ])
 def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
-    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    dados,tipo = filtragem(data,tipo_value, geracao_value,lendario_value)
     
     return chart_egg_x_catch(dados)    
 
