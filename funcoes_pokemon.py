@@ -12,6 +12,15 @@ import plotly.figure_factory as ff
 #plt.style.use('bmh')
 #plt.rcParams['figure.dpi'] = 100
 
+def filtragem(dados,tipo,geracao,leg):
+    
+    dados = dados[(dados['type1'].isin(tipo)) | (dados['type2'].isin(tipo))]
+    dados = dados[dados.generation.isin(geracao)]
+    dados = dados[dados.is_legendary.isin(leg)]
+
+    return dados
+
+
 
 def grafico_radar_comparacao(dados, tipos):
     cores_tipos = {
