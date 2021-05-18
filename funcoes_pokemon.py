@@ -9,17 +9,45 @@ import plotly.graph_objs as go
 import plotly.figure_factory as ff
 
 
-#plt.style.use('bmh')
-#plt.rcParams['figure.dpi'] = 100
+
 
 def filtragem(dados,tipo,geracao,leg):
-    
-    dados = dados[(dados['type1'].isin(tipo)) | (dados['type2'].isin(tipo))]
-    dados = dados[dados.generation.isin(geracao)]
-    dados = dados[dados.is_legendary.isin(leg)]
+  todos_tipo = dados.type1.unique()
+  todos_ger = dados.generation.unique()
+  todos_leg = dados.is_legendary.unique()
 
-    return dados
+  if not tipo:
+    tipo = todos_tipo
+  else:
+    tipo = tipo  
 
+  if not geracao:
+    geracao = todos_ger  
+  else:
+    geracao = geracao
+
+  if not leg:
+    leg = todos_leg
+  else:
+    leg = leg
+
+  dados = dados[(dados['type1'].isin(tipo)) | (dados['type2'].isin(tipo))]
+  dados = dados[dados.generation.isin(geracao)]
+  dados = dados[dados.is_legendary.isin(leg)]
+
+  return dados, tipo
+
+def quantidade(dados): 
+    qtd = dados.shape[0]
+    return qtd
+
+def alt_media(dados):
+    alt = dados['height_m'].mean()   
+    return round(alt,2)
+
+def peso_media(dados):
+    peso = dados['weight_kg'].mean()
+    return round(peso,2)
 
 
 def grafico_radar_comparacao(dados, tipos):
@@ -136,17 +164,7 @@ def chart_catch_x_tot(df,tipos):
     return fig
 
 
-
-# def chart_catch_x_tot(df):
-#     a = list(df.capture_rate)
-#     a[773]=0
-#     x = list(map(int, a))
-#     x[773]=np.nan
-#     y=df.base_total
-#     fig = px.scatter(df, x=x, y=y,hover_name=df.name,template='none')
-#     fig.update_xaxes(title_text='Facilidade de captura')
-#     fig.update_yaxes(title_text='Atributos totais')
-#     return fig    
+ 
 
 def chart_egg_x_tot(df):
     x = df.base_egg_steps
@@ -159,10 +177,7 @@ def chart_egg_x_tot(df):
     return fig
 
 def chart_egg_x_catch(df):
-    a = list(df.capture_rate)
-    a[773]=0
-    y = list(map(int, a))
-    y[773]=np.nan
+    y = df.capture_rate.astype(int)
     x = df.base_egg_steps
     fig = px.box(df, x=x, y=y, hover_name=df.name,template='none', category_orders={"base_egg_steps":["1280","2560","3840","5120","6400",
                                                                                            "7680","8960","10240","20480","30720"]})
