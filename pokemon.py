@@ -54,7 +54,7 @@ controls = dbc.FormGroup(
             'textAlign': 'center'
         }),
         dbc.Card([dcc.Dropdown(
-    id='natureza',
+    id='tipo',
     options=[
         {'label': 'Fogo', 'value': 'fire'},
         {'label': 'Água', 'value': 'water'},
@@ -76,7 +76,8 @@ controls = dbc.FormGroup(
         {'label': 'Noturno', 'value': 'dark'}
     ],
     value=['fire','water'],
-    multi=True
+    multi=True,
+    
 )]) ,
  
         html.Br(),
@@ -184,10 +185,10 @@ content_first_row = dbc.Row([
 content_second_row = dbc.Row(
     [
         dbc.Col(
-            dcc.Graph(figure = graf2), md=6,
+            dcc.Graph(id = 'graph_1'), md = 6,
         ),
         dbc.Col(
-            dcc.Graph(figure = radar),md = 6
+            dcc.Graph(id = 'graph_2'),md = 6
 ,
         )
         
@@ -199,7 +200,7 @@ content_third_row = dbc.Row(
     [
         
         dbc.Col(
-            dcc.Graph(figure= graf3), md=12,
+            dcc.Graph(id = 'graph_3'), md=12,
         )
         
         
@@ -212,7 +213,7 @@ content_third_row = dbc.Row(
 content_fourth_row = dbc.Row(
     [
         dbc.Col(
-            dcc.Graph(figure=graf4), md=12,
+            dcc.Graph(id = 'graph_4'), md=12,
         )
         
     ]
@@ -243,26 +244,46 @@ app.layout = html.Div([sidebar, content])
     Output('graph_1', 'figure'),
     [Input('submit_button', 'n_clicks')],
     [
-     State('natureza', 'value')
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
      ])
-def update_graph_1(n_clicks,  natureza_value):
-  
-    df = px.data.iris()
-    fig = px.scatter(df, x='sepal_width', y='sepal_length',template = 'none')
-    return fig
+def update_graph_1(n_clicks, tipo_value, geracao_value,leg_value):
+    dados = filtragem(data,tipo_value, geracao_value,leg_value)
+    
+    return chart_catch_x_tot(dados,tipo_value)
 
 
-#@app.callback(
-#    Output('graph_2', 'figure'),
-#    [Input('submit_button', 'n_clicks')],
-#    [
-#     State('paises', 'value')
-#     ])
-#def update_graph_2(n_clicks,  paises_value):
-#    
-#    return graphic_disp(paises_value,new_data)
+@app.callback(
+    Output('graph_2', 'figure'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
+    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    
+    return grafico_radar_comparacao(dados,tipo_value)
 
+@app.callback(
+    Output('graph_3', 'figure'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
+    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    
+    return chart_egg_x_tot(dados)
 
+@app.callback(
+    Output('graph_4', 'figure'),
+    [Input('submit_button', 'n_clicks')],
+    [
+     State('tipo', 'value'),State('geracao','value'),State('lendario','value')
+     ])
+def update_graph_1(n_clicks, tipo_value, geracao_value,lendario_value):
+    dados = filtragem(data,tipo_value, geracao_value,lendario_value)
+    
+    return chart_egg_x_catch(dados)    
 
 if __name__ == '__main__':
     app.run_server(port='8085')
