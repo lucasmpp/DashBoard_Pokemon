@@ -96,7 +96,7 @@ def grafico_radar_comparacao(dados, tipos):
                 dict_medidas_resumo['speed'],
                 dict_medidas_resumo["hp"]
             ],
-            theta = ['HP','Ataque','Defesa','Ataque Especial','Defesa Especial','Velocidade','HP'],
+            theta = ['Vida','Ataque','Defesa','Ataque Especial','Defesa Especial','Velocidade','Vida'],
             fill = 'toself',
             line =  dict(
                 color = cores_tipos[tipo]
