@@ -154,13 +154,16 @@ def chart_catch_x_tot(df,tipos):
     for tipo in tipos:
         df1 = parse_dados(df,tipo)
         fig.add_trace(go.Scatter(
-            x=df1.capture_rate,
+            x=df1.capture_rate.astype(int),
             y=df1.base_total,
             hovertext=df1.name,
             name=tipo,
             marker_color=cores_tipos[tipo]
         ))
     fig.update_traces(mode = 'markers')
+    fig.update_xaxes(title_text='Facilidade de captura')
+    fig.update_yaxes(title_text='Atributos totais')
+    fig.update_xaxes(categoryorder='category ascending')
     return fig
 
 
