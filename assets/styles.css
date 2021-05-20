@@ -1,0 +1,87 @@
+:root {
+    --red: hsl(351, 61%, 52%);
+    --dark-red: hsl(0, 100%, 40%);
+    --dark-red2: hsl(351, 90%, 40%);
+    --light-blue: #98d7ff;
+    --blue: hsl(204, 90%, 40%);
+    --dark-blue: #006090;
+    --dark-red3: hsl(340, 90%, 25%);
+    --yellow: #FFDE00;
+    --dark-yellow: #B3A125;
+    --white-primary: #EEE;
+    --gray: #c9d3d3;
+    --pink: #d890a8;
+
+    --black: #002b37;
+    --dark-grey: hsl(193, 95%, 15%);
+
+    --light-grey: #82999e;
+}
+
+body {
+    background-color: var(--black);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 20%;
+    padding: 20px 10px;
+    background-color: var(--dark-red3);
+}
+
+.sidebar .title {
+    text-align: center;
+    color: var(--white-primary);
+}
+
+
+.main-content {
+    margin-left: 25%;
+    margin-right: 5%;
+    padding: 20px 10px;
+}
+
+.main-content .title {
+    text-align: center;
+    color: var(--dark-red2);
+}
+
+.input-title {
+    text-align: center;
+    color: white;
+}
+
+div.Select-control, .is-open>div.Select-control, .Select-menu-outer {
+    background-color: var(--dark-grey);
+    border: 1px solid var(--light-grey);
+    color: var(--gray);
+}
+
+.Select--multi div.Select-value {
+    color: var(--gray);
+    border: 1px solid var(--light-grey);
+}
+
+div.Select--multi span.Select-value-icon {
+    border-right: 1px solid var(--light-grey);
+}
+
+.card {
+    height: fit-content;
+    background-color: var(--dark-grey);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--blue);
+}
+
+.card-content {
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--light-grey);
+}
